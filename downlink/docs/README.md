@@ -3,7 +3,7 @@ Downlink
 # Directions
 '''
 docker build -t downlink .
-docker run --privileged downlink
+docker run --network host --privileged downlink
 docker run --device=/dev/ttyUSB0 downlink
 '''
 
