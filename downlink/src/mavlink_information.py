@@ -1,5 +1,6 @@
 from pymavlink import mavutil
 import time
+import socket
 
 # MAVLink parameter names
 PARAM_NAMES = [
@@ -11,7 +12,16 @@ PARAM_NAMES = [
     "YAW_RATE_CMD"
 ]
 
-def main(connection_string, output_port):
+# PC you want to send it to 
+UDP_IP = "10.0.0.39"  # Target machine's IP address
+UDP_PORT = 14569  # Chosen port number
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+def send_data(data):
+    sock.sendto(data, (UDP_IP, UDP_PORT))
+
+def main(connection_string):
     # Connect to the MAVLink device
     master = mavutil.mavlink_connection(connection_string, baud=57600)
     
@@ -22,16 +32,13 @@ def main(connection_string, output_port):
     # Infinite loop to handle MAVLink messages
     while True:
         msg = master.recv_match(type='PARAM_VALUE', blocking=True)
-        if msg.param_id.decode() in PARAM_NAMES:
-            # Handle or forward the parameter value as needed
-            # For example, you can forward to another port or print to the console
-            print(f"{msg.param_id}: {msg.param_value}")
+        if msg and msg.param_id.decode() in PARAM_NAMES:
+            # Format and send data over UDP
+            data_str = f"{msg.param_id}: {msg.param_value}"
+            send_data(data_str.encode('utf-8'))
+            # Additionally, print to the console if needed
+            print(data_str)
 
 if __name__ == "__main__":
-    # Connect to the device (adjust as needed)
     connection_string = "/dev/ttyUSB0"
-    
-    # Output port (adjust as needed)
-    output_port = "10.0.0.44"
-    
-    main(connection_string, output_port)
+    main(connection_string)
