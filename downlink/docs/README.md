@@ -4,7 +4,7 @@ Downlink
 '''
 docker build -t downlink .
 docker run --network host --privileged downlink
-docker run --device=/dev/ttyUSB0 downlink
+docker run --network host --privileged -it downlink /bin/bash
 '''
 
 **Clean up docker containers**

@@ -12,4 +12,5 @@ COPY . .
 
 RUN pip3 install --no-cache-dir -r src/requirements.txt
 
+
 ENTRYPOINT ["python3", "-u", "src/mavlink_information.py"]
