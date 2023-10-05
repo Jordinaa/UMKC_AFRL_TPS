@@ -9,8 +9,7 @@ PARAM_NAMES = [
     "ELEVATOR", "RUDDER", "THROTTLE", "FLAPS", "GROUNDSPEED", "LCL_POSN_X", "LCL_POSN_Y",
     "LCL_POSN_Z", "LCL_VEL_X", "LCL_VEL_Y", "LCL_VEL_Z", "CLIMB_RATE", "ATTITUDE_CMD_Q1",
     "ATTITUDE_CMD_Q2", "ATTITUDE_CMD_Q3", "ATTITUDE_CMD_Q4", "ROLL_RATE_CMD", "PITCH_RATE_CMD",
-    "YAW_RATE_CMD"
-]
+    "YAW_RATE_CMD"]
 
 # PC you want to send it to 
 UDP_IP = "10.0.0.39"  # Target machine's IP address
