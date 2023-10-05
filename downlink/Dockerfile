@@ -1,20 +1,15 @@
-# Use an appropriate base image. Ubuntu 20.04 LTS is commonly used for such applications.
-FROM ubuntu:20.04
+FROM python:3.8-slim
 
-# Set environment to non-interactive (this will prevent some prompts)
-ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /downlink
 
-# Update & Upgrade system
-RUN apt-get update && apt-get upgrade -y && apt-get clean
+# Optional: Declare a volume (this is more for documentation and isn't strictly necessary)
+VOLUME /downlink/src
 
-# Install prerequisites and utilities
-RUN apt-get install -y python3 python3-pip python3-dev usbutils
+# Optional: Expose a port (e.g., if your script starts a server on port 8080)
+# EXPOSE 8080
 
-# Install mypavutil and mavproxy
-RUN pip3 install pymavlink MAVProxy
+COPY . .
 
-# Create an entry script to handle input and output
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN pip3 install --no-cache-dir -r src/requirements.txt
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["python3", "src/mavlink_information.py"]

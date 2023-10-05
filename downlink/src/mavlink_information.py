@@ -1,4 +1,4 @@
-from pymvalink import mavutil
+from pymavlink import mavutil
 import time
 
 # MAVLink parameter names
@@ -29,9 +29,9 @@ def main(connection_string, output_port):
 
 if __name__ == "__main__":
     # Connect to the device (adjust as needed)
-    connection_string = "YOUR_DEVICE_STRING_HERE"
+    connection_string = "/dev/ttyUSB0"
     
     # Output port (adjust as needed)
-    output_port = "YOUR_OUTPUT_PORT_HERE"
+    output_port = "10.0.0.44"
     
     main(connection_string, output_port)
