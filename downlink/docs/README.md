@@ -14,6 +14,3 @@ docker rmi $(docker images -q)
 docker system prune -a
 '''
 
-TODO
-- [ ] add 33 parameters for mavlink
-- [ ] compile IADSInterface
