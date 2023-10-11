@@ -31,12 +31,16 @@ def main(connection_string):
     # Infinite loop to handle MAVLink messages
     while True:
         msg = master.recv_match(type='PARAM_VALUE', blocking=True)
-        if msg and msg.param_id.decode() in PARAM_NAMES:
-            # Format and send data over UDP
-            data_str = f"{msg.param_id}: {msg.param_value}"
-            send_data(data_str.encode('utf-8'))
-            # Additionally, print to the console if needed
-            print(data_str)
+        # Convert MAVLink message to dictionary
+        if msg:
+            mav_dict = msg.to_dict()
+            # Check if param_id exists in the dictionary and in the list of parameter names
+            if "param_id" in mav_dict and mav_dict["param_id"] in PARAM_NAMES:
+                # Format and send data over UDP
+                data_str = f"{mav_dict['param_id']}: {mav_dict['param_value']}"
+                send_data(data_str.encode('utf-8'))
+                # Additionally, print to the console if needed
+                print(data_str)
 
 if __name__ == "__main__":
     connection_string = "/dev/ttyUSB0"
